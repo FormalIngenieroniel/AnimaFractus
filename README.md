@@ -2,7 +2,7 @@ Idea principal:
 
 1. El Contexto y Problemática
 
-Título: Zeitgeist 2020: Análisis de Disonancia Cognitiva Social mediante Arquitectura Multi-Agente Distribuida.
+Título: Anima Fractus: Análisis de Disonancia Cognitiva Social mediante Arquitectura Multi-Agente Distribuida en Cloud.
 
 El Contexto: Nos situamos en la ventana crítica de Abril a Junio de 2020. El mundo está en "Pausa". No es un momento estático; es un periodo de adaptación forzada.
 

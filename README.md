@@ -77,3 +77,50 @@ Frontend: Ves el chat limpio.
 Sidebar (Valor Agregado): Muestra en tiempo real qué herramienta está usando cada agente ("Survivor está leyendo base de datos: covid_tweets...", "Speculator está analizando: btc_prices...").
 
 Respuesta: Texto enriquecido generado por un modelo de HuggingFace (ej. Mistral-7B-Instruct) que sintetiza el debate.
+
+Indice de carpetas:
+
+AnimaFractus/
+│
+├── .gitignore             # Archivo global (ignora venv/, __pycache__, .env)
+├── README.md              # Documentación general
+│
+├── data_layer/            # TODO LO DE LA INSTANCIA A (EC2 DATA)
+│   ├── Dockerfile         # Para crear la imagen de setup/ETL
+│   ├── requirements.txt   # chromadb, pandas, sentence-transformers
+│   ├── etl_script.py      # Script que lee los CSV y carga ChromaDB
+│   ├── datasets/          # Carpeta con tus CSVs (covid.csv, kojima.csv...)
+│   └── start_chroma.sh    # Script auxiliar para arrancar la DB
+│
+├── logic_layer/           # TODO LO DE LA INSTANCIA B (EC2 APP)
+│   ├── Dockerfile         # Para el servidor API
+│   ├── requirements.txt   # fastapi, langgraph, langchain, uvicorn, requests
+│   ├── main.py            # El servidor FastAPI (Entrypoint)
+│   ├── graph_builder.py   # La lógica de LangGraph (Nodos y aristas)
+│   └── agents.py          # Los prompts y lógica de los 3 agentes
+│
+└── presentation_layer/    # TODO LO DE LA INSTANCIA C (EC2 WEB)
+    ├── Dockerfile         # Para streamlit
+    ├── requirements.txt   # streamlit, requests, pandas
+    └── app.py             # La interfaz gráfica
+
+
+Configuracion de seguridad:
+
+Security Group "SG-DATA" (Para Instancia A):
+
+Tipo: Custom TCP | Puerto: 8000 | Source: IP Privada de Instancia B (Logic).
+
+Tipo: SSH | Puerto: 22 | Source: My IP (Para que tú entres).
+
+Security Group "SG-LOGIC" (Para Instancia B):
+
+Tipo: Custom TCP | Puerto: 5000 | Source: IP Privada de Instancia C (Web).
+
+Tipo: SSH | Puerto: 22 | Source: My IP.
+
+Security Group "SG-WEB" (Para Instancia C):
+
+Tipo: Custom TCP | Puerto: 8501 | Source: 0.0.0.0/0 (Todo el mundo).
+
+Tipo: SSH | Puerto: 22 | Source: My IP.

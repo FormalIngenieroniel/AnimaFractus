@@ -81,28 +81,50 @@ Respuesta: Texto enriquecido generado por un modelo de HuggingFace (ej. Mistral-
 Indice de carpetas:
 
 AnimaFractus/
+
 │
+
 ├── .gitignore             # Archivo global (ignora venv/, __pycache__, .env)
+
 ├── README.md              # Documentación general
+
 │
+
 ├── data_layer/            # TODO LO DE LA INSTANCIA A (EC2 DATA)
+
 │   ├── Dockerfile         # Para crear la imagen de setup/ETL
+
 │   ├── requirements.txt   # chromadb, pandas, sentence-transformers
+
 │   ├── etl_script.py      # Script que lee los CSV y carga ChromaDB
+
 │   ├── datasets/          # Carpeta con tus CSVs (covid.csv, kojima.csv...)
+
 │   └── start_chroma.sh    # Script auxiliar para arrancar la DB
+
 │
+
 ├── logic_layer/           # TODO LO DE LA INSTANCIA B (EC2 APP)
+
 │   ├── Dockerfile         # Para el servidor API
+
 │   ├── requirements.txt   # fastapi, langgraph, langchain, uvicorn, requests
+
 │   ├── main.py            # El servidor FastAPI (Entrypoint)
+
 │   ├── graph_builder.py   # La lógica de LangGraph (Nodos y aristas)
+
 │   └── agents.py          # Los prompts y lógica de los 3 agentes
+
 │
+
 └── presentation_layer/    # TODO LO DE LA INSTANCIA C (EC2 WEB)
-    ├── Dockerfile         # Para streamlit
-    ├── requirements.txt   # streamlit, requests, pandas
-    └── app.py             # La interfaz gráfica
+
+.    ├── Dockerfile         # Para streamlit
+    
+.    ├── requirements.txt   # streamlit, requests, pandas
+    
+.    └── app.py             # La interfaz gráfica
 
 
 Configuracion de seguridad:

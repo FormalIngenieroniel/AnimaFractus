@@ -1,17 +1,16 @@
-FROM python:3.9-slim
+# CAMBIO IMPORTANTE: Usamos Python 3.11 en lugar de 3.9
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Instalar dependencias del sistema si son necesarias
-RUN apt-get update && apt-get install -y git
+# Instalar git y curl por si son necesarios
+RUN apt-get update && apt-get install -y git curl
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Exponer puerto lógico
 EXPOSE 5000
 
-# Comando de arranque
 CMD ["python", "main.py"]

@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+requests
+python-dotenv
+torch --index-url https://download.pytorch.org/whl/cpu
+sentence-transformers
+chromadb
+langchain
+langchain-google-genai
+pydantic

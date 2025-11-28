@@ -13,6 +13,7 @@ chroma_db/
 *.pyc
 *.pyo
 __pycache__/
+logic_layer/run_logic.sh
 
 # Logs y archivos temporales
 *.log

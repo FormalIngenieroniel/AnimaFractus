@@ -1,0 +1,13 @@
+env/
+venv/
+.git/
+__pycache__/
+*.pyc
+.DS_Storeenv/
+*.env
+
+.c9/
+*..c9
+
+.git/
+*..git

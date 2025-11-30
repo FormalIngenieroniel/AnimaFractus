@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Anima Fractus</title>
+    <!-- Asegúrate de que Flask encuentre este CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div id="scroll-sidebar">
+        <div class="scroll-content">
+            <h2>📜 System Scroll</h2>
+            <hr>
+            <div class="status-item">🟢 Presentation: <span class="online">Online</span></div>
+            <div class="status-item">🟡 Logic Core: <span class="connecting">Active</span></div>
+            <hr>
+            <h3>👥 Agents</h3>
+            
+            <!-- NUEVA ESTRUCTURA DE AGENTES (Cartas con cara) -->
+            <div class="agent-list">
+                <!-- Survivor -->
+                <div class="agent-card">
+                    <img src="{{ url_for('static', filename='images/survivor_face.PNG') }}" alt="Survivor Face" class="agent-face">
+                    <span class="agent-name">Survivor</span>
+                </div>
+                <!-- Speculator -->
+                <div class="agent-card">
+                    <img src="{{ url_for('static', filename='images/speculator_face.PNG') }}" alt="Speculator Face" class="agent-face">
+                    <span class="agent-name">Speculator</span>
+                </div>
+                <!-- Auteur -->
+                <div class="agent-card">
+                    <img src="{{ url_for('static', filename='images/kojima_face.PNG') }}" alt="Auteur Face" class="agent-face">
+                    <span class="agent-name">Auteur</span>
+                </div>
+                <!-- Historian -->
+                <div class="agent-card">
+                    <img src="{{ url_for('static', filename='images/historian_face.PNG') }}" alt="Historian Face" class="agent-face">
+                    <span class="agent-name">Historian</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <main>
+        <div class="library-container">
+            <h1 class="main-title">Project: Anima Fractus</h1>
+            
+            <div class="input-section">
+                <input type="text" id="userQuery" placeholder="Ingresa tu consulta al archivo..." value="¿Cómo cambió la percepción del miedo?">
+                <button id="startBtn" onclick="startAnalysis()">Comenzar Debate 🌿</button>
+            </div>
+
+            <div class="bookshelf-scene">
+                
+                <!-- Personaje Guía (Ahora posicionado con CSS absoluto para no tapar) -->
+                <div class="guide-character">
+                    <img src="{{ url_for('static', filename='images/guidetut.png') }}" alt="Guía">
+                </div>
+
+                <!-- Estantería con GRIDS -->
+                <div class="bookshelf">
+                    <!-- Contenedor de libros (oculto hasta momento 2) -->
+                    <div id="books-container" class="hidden" style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                        
+                        <!-- FILA SUPERIOR (3 Libros) -->
+                        <div class="shelf-row top">
+                            <!-- Survivor (Azul/Rojo en tu ref) -->
+                            <div class="book-spine survivor" onclick="openBook('Survivor')">
+                                <img src="{{ url_for('static', filename='images/book_bkshl_1.PNG') }}" alt="Survivor">
+                            </div>
+                            <!-- Speculator (Verde) -->
+                            <div class="book-spine speculator" onclick="openBook('Speculator')">
+                                <img src="{{ url_for('static', filename='images/book_bkshl_2.PNG') }}" alt="Speculator">
+                            </div>
+                            <!-- Auteur (Morado) -->
+                            <div class="book-spine auteur" onclick="openBook('Auteur')">
+                                <img src="{{ url_for('static', filename='images/book_bkshl_3.PNG') }}" alt="Auteur">
+                            </div>
+                        </div>
+
+                        <!-- FILA INFERIOR (1 Libro - Historian) -->
+                        <div class="shelf-row bottom">
+                            <!-- Historian (Rosa/Rojo en tu ref) -->
+                            <div class="book-spine historian" onclick="openBook('The Historian')">
+                                <img src="{{ url_for('static', filename='images/book_bkshl_4.PNG') }}" alt="Historian">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- OVERLAY -->
+    <div id="book-overlay" class="hidden">
+        <div class="overlay-backdrop" onclick="closeBook()"></div>
+        
+        <div class="book-modal">
+            <button class="close-book-btn" onclick="closeBook()">×</button>
+
+            <!-- Portada -->
+            <div id="view-cover" class="book-view">
+                <img id="cover-img" src="" alt="Portada" class="cover-image">
+                <button class="nav-arrow right-arrow" onclick="goToContent()">➡️</button>
+            </div>
+
+            <!-- Páginas (AQUÍ APARECERÁ LA IMAGEN DEL LIBRO DE FONDO) -->
+            <div id="view-pages" class="book-view hidden">
+                <div class="page-paper">
+                    <div class="book-text-mask">
+                        <div id="rag-info" class="rag-box hidden"></div>
+                        <div id="page-text" class="text-content"></div>
+                        <div class="page-number">- <span id="page-num">1</span> -</div>
+                    </div>
+                    </div>
+                <button class="nav-arrow left-arrow" onclick="prevPage()">⬅️</button>
+                <button class="nav-arrow right-arrow" onclick="nextPage()">➡️</button>
+            </div>
+
+            <!-- Contraportada -->
+            <div id="view-back" class="book-view hidden">
+                <img id="back-img" src="" alt="Contraportada" class="cover-image">
+                <button class="nav-arrow left-arrow" onclick="goToContent(true)">⬅️</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -7,7 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Puerto default de Streamlit
 EXPOSE 8501
 
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Comando para correr Flask
+# host=0.0.0.0 permite acceso externo, port=8501 mantiene consistencia
+CMD ["python", "app.py"]

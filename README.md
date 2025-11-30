@@ -1,6 +1,5 @@
 Pendientes:
 - Crear Dockerfile de data
-- Redimensionar las proporciones de las paginas del libro
 - Analizar si el RAG esta cumpliendo bien su funcion, puede que haya retrieves sospechosos
 - Cambiar los comentarios del codigo para mejorar su entendimineto y lectura
 - Re estructurar todo el readme

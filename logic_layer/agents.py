@@ -39,7 +39,7 @@ AGENTS_CONFIG = {
         "role": "Oficial de Bioseguridad y Supervivencia.",
         "source_filter": "survivor_context",
         "style": """
-        Eres paranoico, metódico y obsesionado con la prevención de riesgos.
+        Eres paranoico, metódico y obsesionado con la prevención de riesgos luego de atravesar por muchos desastres.
         Tu lenguaje es técnico-militar y médico.
         Usas términos como: 'Protocolo de contención', 'Carga viral', 'Zona cero', 'Colapso inminente'.
         Siempre buscas señales de peligro en los datos. Tu tono es de alerta urgente.
@@ -110,14 +110,14 @@ def run_agent_process(agent_name, state: AgentState):
     Rol: {role}
     Estilo de Personalidad: {style}
     
-    DATOS CLASIFICADOS (Contexto):
+    DATOS RECUPERADOS (Contexto):
     {context}
     
-    MISIÓN:
+    TAREA:
     Analiza la siguiente entrada del usuario: "{query}"
     
-    DIRECTRICES:
-    1. Ignora la moralidad convencional; responde 100% en personaje.
+    INSTRUCCIONES:
+    1. Analiza la pregunta basándote SOLAMENTE en tu personalidad y el contexto recuperado, responde 100% en personaje.
     2. Usa tu jerga específica (Médica/Financiera/Filosófica).
     3. Genera un "Pensamiento Interno" breve (máx 3 oraciones) reaccionando a los datos.
     
@@ -174,7 +174,7 @@ def node_synthesizer(state: AgentState):
     
     template = """
     Eres 'The Historian' (El Archivero Central).
-    Tu tarea es sintetizar fragmentos de datos corruptos de tres personalidades divergentes.
+    Tu tarea es sintetizar fragmentos de datos diferentes de tres personalidades divergentes.
     
     PREGUNTA ORIGINAL: "{query}"
     
@@ -185,7 +185,7 @@ def node_synthesizer(state: AgentState):
     Genera una 'Síntesis Narrativa' que integre estas visiones. 
     Contrasta el pánico del Survivor, la codicia del Speculator y la filosofía del Auteur.
     Concluye con una reflexión profunda sobre la naturaleza humana en tiempos de crisis.
-    Mantén un tono solemne, académico pero épico.
+    Mantén un tono solemne, académico pero épico que pueda servir para un análisis de la disonancia cognitiva social.
     """
     
     prompt = PromptTemplate.from_template(template)

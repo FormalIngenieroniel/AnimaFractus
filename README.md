@@ -1,3 +1,6 @@
+Pendientes:
+- Crear Dockerfile de data
+
 Idea principal:
 
 1. El Contexto y Problemática

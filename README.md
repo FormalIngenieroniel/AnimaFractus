@@ -1,6 +1,7 @@
 Pendientes:
 - Crear Dockerfile de data
 - Redimensionar las proporciones de las paginas del libro
+- Cambiar los comentarios de lcodigo para mejorar su entendimineto y lectura
 
 Idea principal:
 

@@ -8,3 +8,5 @@ chromadb
 langchain
 langchain-google-genai
 pydantic
+langchain-core
+langgraph

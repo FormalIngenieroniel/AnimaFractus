@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import os
-from agents import run_agent_analysis, synthesize_results
+import uvicorn
+from agents import app_graph  # Importamos el grafo compilado
 
 app = FastAPI()
 
@@ -10,32 +10,36 @@ class QueryRequest(BaseModel):
 
 @app.post("/ask")
 async def ask_agent(request: QueryRequest):
-    print(f"📨 Recibida pregunta: {request.question}")
+    print(f"\n📨 SOLICITUD ENTRANTE: {request.question}")
     
     try:
-        # 1. Ejecutar los 3 agentes en paralelo (o secuencial rápido)
-        logs = []
-        agent_names = ["Survivor", "Speculator", "Auteur"]
+        # Estado inicial
+        initial_state = {
+            "question": request.question,
+            "analysis_logs": [],
+            "final_synthesis": ""
+        }
         
-        for name in agent_names:
-            print(f"   🤖 Consultando Agente: {name}...")
-            result = run_agent_analysis(name, request.question)
-            logs.append(result)
-            
-        # 2. Sintetizar respuesta final
-        print("   ⚖️  Sintetizando respuesta final...")
-        final_synthesis = synthesize_results(request.question, logs)
+        # Ejecutamos el grafo
+        # invoke devuelve el estado final después de pasar por todos los nodos
+        final_state = app_graph.invoke(initial_state)
+        
+        # Extraemos resultados del estado final
+        synthesis = final_state.get("final_synthesis", "Error generando síntesis.")
+        logs = final_state.get("analysis_logs", [])
+        
+        print(f"✅ Proceso completado. Logs generados: {len(logs)}")
         
         return {
-            "synthesis": final_synthesis,
+            "synthesis": synthesis,
             "logs": logs
         }
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"❌ Error Crítico en Logic Layer: {e}")
+        # Es buena práctica imprimir el stacktrace en logs reales
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    import uvicorn
-    
+    # Corremos en 0.0.0.0 para que sea accesible desde otros contenedores
     uvicorn.run(app, host="0.0.0.0", port=5000)

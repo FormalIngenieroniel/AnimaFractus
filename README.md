@@ -1,5 +1,6 @@
 Pendientes:
 - Crear Dockerfile de data
+- Redimensionar las proporciones de las paginas del libro
 
 Idea principal:
 

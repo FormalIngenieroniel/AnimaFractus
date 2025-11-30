@@ -1,6 +1,7 @@
 import os
 import operator
 from typing import Annotated, List, TypedDict, Union
+import re # Importamos regex para limpieza fina
 
 import chromadb
 from sentence_transformers import SentenceTransformer
@@ -23,106 +24,122 @@ except Exception as e:
     collection = None
 
 print("🧠 Cargando modelo de embeddings para consultas...")
-# Usamos CPU por defecto, ideal para contenedores ligeros
 embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
 
-# Configuración del LLM (Gemini)
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash-lite",
-    temperature=0.8, # Un poco más creativo para las personalidades
+    temperature=0.7,
     google_api_key=os.getenv("GOOGLE_API_KEY")
 )
 
-# --- 2. PERSONALIDADES ENRIQUECIDAS (System Prompts) ---
+# --- 2. PERSONALIDADES ---
 AGENTS_CONFIG = {
     "Survivor": {
         "role": "Oficial de Bioseguridad y Supervivencia.",
         "source_filter": "survivor_context",
+        "keywords": "covid pandemic virus death emergency quarantine fear symptoms hospital",
         "style": """
-        Eres paranoico, metódico y obsesionado con la prevención de riesgos luego de atravesar por muchos desastres.
+        Eres paranoico, metódico y obsesionado con la prevención.
         Tu lenguaje es técnico-militar y médico.
-        Usas términos como: 'Protocolo de contención', 'Carga viral', 'Zona cero', 'Colapso inminente'.
-        Siempre buscas señales de peligro en los datos. Tu tono es de alerta urgente.
+        Frases clave: 'Protocolo de contención', 'Carga viral', 'Zona cero'.
+        Ves peligros en todos lados. Tu tono es de alerta urgente.
         """
     },
     "Speculator": {
-        "role": "Trader de Alto Riesgo / 'Crypto Bro'.",
+        "role": "Analista de Mercados Cuantitativo.",
         "source_filter": "speculator_context",
+        "keywords": "stock market finance money spx nasdaq crash volatility profit liquidity",
         "style": """
-        Eres un tiburón financiero agresivo y cínico. Solo te importa el ROI y la volatilidad.
-        Usas jerga de WallStreetBets: 'To the moon', 'HODL', 'Bear market', 'Liquidez', 'Apalancamiento'.
-        Ves las tragedias humanas solo como oportunidades de mercado o riesgos para tu portafolio.
-        Tu tono es eufórico o desesperado, dependiendo de la tendencia.
+        Eres un analista frío, matemático y pragmático. No eres malvado, simplemente indiferente a lo humano.
+        Solo te importan los números, el ROI y la volatilidad.
+        Donde otros ven tragedia, tú ves patrones gráficos y correcciones de mercado.
+        Usas jerga financiera técnica: 'Bull trap', 'Liquidez', 'Soporte', 'Volatilidad'.
+        Tu tono es seco, directo y desapegado.
         """
     },
     "Auteur": {
         "role": "Director de Videojuegos Visionario (Estilo Hideo Kojima).",
         "source_filter": "auteur_context",
+        "keywords": "connection strands isolation technology soul humanity art cinema",
         "style": """
-        Eres un filósofo digital, poético y pretencioso. Hablas sobre la 'conexión', los 'strands', y la soledad humana.
-        Rompes la cuarta pared. Ves la realidad como una simulación o una cinemática.
-        Usas metáforas complejas sobre la evolución, la tecnología y el alma (anima).
-        Tu tono es melancólico, profundo y cinematográfico.
+        Eres un creador enigmático que habla mediante aforismos cortos y profundos.
+        Hablas con sentencias potentes como en un tráiler de cine.
+        Hablas de 'conexiones' (strands) y la soledad digital.
+        Tu tono es melancólico pero muy conciso.
         """
     }
 }
 
-# --- 3. DEFINICIÓN DEL ESTADO DEL GRAFO (LangGraph) ---
+# --- 3. ESTADO ---
 class AgentState(TypedDict):
     question: str
-    # 'operator.add' permite que cuando múltiples nodos escriban en esta key, 
-    # se concatenen las listas en lugar de sobrescribirse (ideal para paralelo).
     analysis_logs: Annotated[List[dict], operator.add] 
     final_synthesis: str
 
-# --- 4. FUNCIONES CORE (Tools) ---
+# --- 4. FUNCIONES CORE ---
 
-def query_chroma(query_text, source_tag, n_results=3):
-    """Busca documentos relevantes en la DB."""
+def query_chroma(query_text, source_tag, desired_results=3):
     if not collection:
         return ["(Error de conexión a BD - Sin contexto disponible)"]
     
     try:
+        RAW_FETCH_LIMIT = 15 
         query_emb = embedding_model.encode([query_text]).tolist()
         results = collection.query(
             query_embeddings=query_emb,
-            n_results=n_results,
+            n_results=RAW_FETCH_LIMIT, 
             where={"source": source_tag}
         )
-        return results['documents'][0] if results['documents'] else []
+        raw_docs = results['documents'][0] if results['documents'] else []
+        
+        unique_docs = []
+        seen_content = set()
+        
+        for doc in raw_docs:
+            clean_doc = doc.strip()
+            if clean_doc not in seen_content:
+                unique_docs.append(clean_doc)
+                seen_content.add(clean_doc)
+            if len(unique_docs) >= desired_results:
+                break
+        return unique_docs
+
     except Exception as e:
         return [f"(Error consultando Chroma: {str(e)})"]
 
 def run_agent_process(agent_name, state: AgentState):
-    """Función genérica que ejecuta la lógica de un agente individual."""
     question = state["question"]
     config = AGENTS_CONFIG[agent_name]
     
-    # A. Recuperación (RAG)
-    print(f"   🔍 {agent_name} buscando en archivos: {config['source_filter']}...")
-    context_docs = query_chroma(question, config["source_filter"])
+    search_query = f"{question} {config.get('keywords', '')}"
+    print(f"   🔍 {agent_name} buscando: '{search_query[:50]}...'")
+    
+    context_docs = query_chroma(search_query, config["source_filter"], desired_results=3)
     context_str = "\n".join([f"> {doc}" for doc in context_docs])
     
-    # B. Inferencia (Gemini)
     template = """
     SYSTEM IDENTITY:
     Nombre: {agent_name}
     Rol: {role}
-    Estilo de Personalidad: {style}
+    Estilo: {style}
     
-    DATOS RECUPERADOS (Contexto):
+    DATOS RECUPERADOS:
     {context}
     
-    TAREA:
-    Analiza la siguiente entrada del usuario: "{query}"
+    PREGUNTA: "{query}"
     
     INSTRUCCIONES:
-    1. Analiza la pregunta basándote SOLAMENTE en tu personalidad y el contexto recuperado, responde 100% en personaje.
-    2. Usa tu jerga específica (Médica/Financiera/Filosófica).
-    3. Genera un "Pensamiento Interno" breve (máx 3 oraciones) reaccionando a los datos.
+    1. Responde desde tu personaje.
+    2. Usa los datos recuperados.
+    
+    RESTRICCIONES DE FORMATO (CRÍTICO):
+    - NO uses títulos, NO escribas "Pensamiento Interno:", NO uses paréntesis introductorios.
+    - Empieza a escribir tu idea directamente.
+    - LONGITUD MÁXIMA: 80 PALABRAS o 5 ORACIONES.
+    - SÉ CONCISO.
     
     OUTPUT:
-    Solo el texto de tu pensamiento.
+    Únicamente el contenido del pensamiento.
     """
     
     prompt = PromptTemplate.from_template(template)
@@ -137,10 +154,22 @@ def run_agent_process(agent_name, state: AgentState):
             "query": question
         })
         thought = response.content
+        
+        # --- LIMPIEZA DE SEGURIDAD ---
+        # Si el LLM desobedece y pone "Pensamiento Interno:", lo borramos aquí.
+        # Esto asegura que el frontend no tenga títulos duplicados.
+        patterns_to_remove = [
+            r"^Pensamiento Interno:\s*", 
+            r"^\(Pensamiento Interno\)\s*",
+            r"^Pensamiento:\s*",
+            r"^Opini[oó]n:\s*"
+        ]
+        for pattern in patterns_to_remove:
+            thought = re.sub(pattern, "", thought, flags=re.IGNORECASE).strip()
+
     except Exception as e:
         thought = f"[ERROR DE PROCESAMIENTO]: {str(e)}"
         
-    # Retornamos un diccionario que LangGraph añadirá a la lista 'analysis_logs'
     return {
         "analysis_logs": [{
             "agent": agent_name,
@@ -161,69 +190,48 @@ def node_auteur(state: AgentState):
     return run_agent_process("Auteur", state)
 
 def node_synthesizer(state: AgentState):
-    """El nodo final que lee todos los logs y genera la conclusión."""
     print("   ⚖️  Sintetizando resultados...")
     logs = state["analysis_logs"]
     question = state["question"]
     
-    # Formateamos los logs para que el historiador los lea bien
     logs_text = "\n\n".join([
-        f"=== REPORTE DE AGENTE: {log['agent']} ===\nOPINIÓN: {log['thought']}" 
+        f"AGENTE {log['agent']}: {log['thought']}" 
         for log in logs
     ])
     
     template = """
-    Eres 'The Historian' (El Archivero Central).
-    Tu tarea es sintetizar fragmentos de datos diferentes de tres personalidades divergentes.
+    Eres 'The Historian'. Sintetiza los pensamientos de tres agentes ante: "{query}"
     
-    PREGUNTA ORIGINAL: "{query}"
-    
-    FRAGMENTOS RECUPERADOS:
+    INPUT:
     {logs}
     
     INSTRUCCIONES:
-    Genera una 'Síntesis Narrativa' que integre estas visiones. 
-    Contrasta el pánico del Survivor, la codicia del Speculator y la filosofía del Auteur.
-    Concluye con una reflexión profunda sobre la naturaleza humana en tiempos de crisis.
-    Mantén un tono solemne, académico pero épico que pueda servir para un análisis de la disonancia cognitiva social.
+    Genera una 'Síntesis Narrativa' breve (máx 120 palabras).
+    Contrasta el miedo (Survivor), la frialdad financiera (Speculator) y la melancolía (Auteur).
+    Concluye con una reflexión sobre la disonancia cognitiva social que sirva para un estudio academico.
     """
     
     prompt = PromptTemplate.from_template(template)
     chain = prompt | llm
-    
     response = chain.invoke({"query": question, "logs": logs_text})
     
-    return {"final_synthesis": response.content}
+    # Limpieza también para el Historiador
+    synthesis_text = response.content.replace("Síntesis Narrativa:", "").strip()
+    
+    return {"final_synthesis": synthesis_text}
 
-# --- 6. CONSTRUCCIÓN DEL GRAFO (LangGraph) ---
+# --- 6. CONSTRUCCIÓN DEL GRAFO ---
 
 workflow = StateGraph(AgentState)
-
-# Agregamos los nodos
 workflow.add_node("Survivor", node_survivor)
 workflow.add_node("Speculator", node_speculator)
 workflow.add_node("Auteur", node_auteur)
 workflow.add_node("Synthesizer", node_synthesizer)
 
-# Definimos el flujo
-# Inicio -> Paralelo (Los 3 agentes arrancan a la vez)
-workflow.set_entry_point("Survivor") # LangGraph secuencial simple o Fan-Out manual
-# Para paralelismo real en LangGraph simple, conectamos Start a cada uno?
-# La forma más simple de "Fan-Out" es definir edges desde el inicio, 
-# pero LangGraph requiere un entry point único o un nodo 'Router'.
-# Para simplificar en esta versión v1: Haremos Start -> Survivor -> Speculator -> Auteur -> Synthesizer
-# NOTA: Si quieres paralelismo real, usa asyncio.gather en un nodo 'Orchestrator'.
-# Para este ejemplo, usaremos un flujo secuencial rápido que simula la interacción.
-
-# Configuración Secuencial (Más segura para evitar race conditions en SQLite/Memory simple)
 workflow.set_entry_point("Survivor")
 workflow.add_edge("Survivor", "Speculator")
 workflow.add_edge("Speculator", "Auteur")
 workflow.add_edge("Auteur", "Synthesizer")
 workflow.add_edge("Synthesizer", END)
-
-# Alternativa Paralela (Si usas LangGraph asíncrono puro):
-# workflow.set_entry_point("Router") -> ["Survivor", "Speculator"...] -> "Synthesizer"
-# Pero mantengamos la robustez secuencial por ahora.
 
 app_graph = workflow.compile()

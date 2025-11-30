@@ -1,8 +1,8 @@
 // --- ESTADO GLOBAL ---
-let appData = null; // Guardará la respuesta de la IA
-let currentBook = null; // Agente seleccionado
+let appData = null; 
+let currentBook = null; 
 let currentPage = 0;
-const CHARS_PER_PAGE = 700;
+const CHARS_PER_PAGE = 650; // Reduje un poco para dar espacio al título en negrita
 
 // --- MOMENTO 1 -> 2: START ANALYSIS ---
 async function startAnalysis() {
@@ -11,7 +11,6 @@ async function startAnalysis() {
     
     if (!query) return alert("Por favor ingresa una pregunta.");
 
-    // UI Loading
     btn.innerText = "Convocando Agentes...";
     btn.disabled = true;
     btn.style.cursor = "wait";
@@ -27,12 +26,10 @@ async function startAnalysis() {
         
         if (data.error) throw new Error(data.error);
         
-        appData = data; // Guardamos datos nuevos
+        appData = data; 
         
-        // Transición a Momento 2 (Mostrar Libros)
         document.getElementById('books-container').classList.remove('hidden');
         
-        // --- HABILITAR MÚLTIPLES CONSULTAS ---
         btn.innerText = "Nueva Consulta"; 
         btn.disabled = false;
         btn.style.cursor = "pointer";
@@ -56,25 +53,18 @@ function openBook(agentName) {
     currentBook = agentName;
     currentPage = 0;
 
-    // 1. Configurar Portada
     const coverImg = document.getElementById('cover-img');
     const safeName = agentName.toLowerCase().replace(' ', '_');
     
-    // Rutas dinámicas
     coverImg.src = `/static/images/bk_${safeName}_f.png`;
-    // Fallback simple por si falla la imagen
     coverImg.onerror = () => { console.log("Imagen portada no encontrada"); };
 
     const backImg = document.getElementById('back-img');
     backImg.src = `/static/images/bk_${safeName}_b.png`;
 
-    // 2. PREPARAR IMAGEN DE LAS PÁGINAS (CONTENIDO)
-    // Aquí es donde inyectamos la imagen de fondo "pixel art" para el texto
     const pagePaper = document.querySelector('.page-paper');
-    // Usamos la convención bk_[nombre]_p.png
     pagePaper.style.backgroundImage = `url('/static/images/bk_${safeName}_p.png')`;
 
-    // Mostrar Overlay y vista de portada
     document.getElementById('book-overlay').classList.remove('hidden');
     switchView('view-cover');
 }
@@ -96,11 +86,13 @@ function goToContent(fromBack = false) {
     let ragDocs = [];
 
     if (currentBook === "The Historian") {
+        // Obtenemos solo el texto puro, el título lo pondremos en renderPage
         fullText = appData.synthesis;
     } else {
         const log = appData.logs.find(l => l.agent === currentBook);
         if (log) {
-            fullText = log.thought;
+            // Obtenemos solo el pensamiento puro (sin concatenar título aquí)
+            fullText = log.thought.trim();
             ragDocs = log.context_used || [];
         } else {
             fullText = "Error: Datos no encontrados para este agente.";
@@ -114,21 +106,43 @@ function goToContent(fromBack = false) {
     switchView('view-pages');
 }
 
-// --- RENDERIZADO DE PÁGINAS ---
+// --- RENDERIZADO DE PÁGINAS (Aquí está la magia de la Negrilla) ---
 function renderPage(fullText, ragDocs, totalPages) {
     const start = currentPage * CHARS_PER_PAGE;
     const end = start + CHARS_PER_PAGE;
-    const pageText = fullText.substring(start, end);
+    
+    // Obtenemos el fragmento de texto
+    let rawPageText = fullText.substring(start, end);
 
+    // Convertimos saltos de linea (\n) a HTML (<br>) para que se vean bien con innerHTML
+    let htmlPageText = rawPageText.replace(/\n/g, "<br>");
+
+    const pageElement = document.getElementById('page-text');
     const ragBox = document.getElementById('rag-info');
-    if (currentPage === 0 && ragDocs.length > 0) {
-        ragBox.innerHTML = "<strong>📎 Fragmentos Recuperados:</strong><br>" + ragDocs.map(d => `• ${d}`).join('<br>');
-        ragBox.classList.remove('hidden');
+    
+    // --- LÓGICA DE VISUALIZACIÓN ---
+    
+    if (currentPage === 0) {
+        // 1. Mostrar Tweets (RAG)
+        if (ragDocs.length > 0) {
+            ragBox.innerHTML = "<strong>Tweets Recuperados:</strong><br>" + ragDocs.map(d => `• ${d}`).join('<br>');
+            ragBox.classList.remove('hidden');
+        } else {
+            ragBox.classList.add('hidden');
+        }
+
+        // 2. Determinar Título
+        let title = "Pensamiento Interno:";
+        if (currentBook === "The Historian") title = "Síntesis del Archivero:";
+
+        pageElement.innerHTML = `<strong style="font-size: 1.1em;">${title}</strong><br>${htmlPageText}`;
+        
     } else {
+        // Páginas siguientes: Solo texto, sin tweets ni título
         ragBox.classList.add('hidden');
+        pageElement.innerHTML = htmlPageText;
     }
 
-    document.getElementById('page-text').innerText = pageText;
     document.getElementById('page-num').innerText = `${currentPage + 1} / ${totalPages}`;
     
     window.currentFullText = fullText;

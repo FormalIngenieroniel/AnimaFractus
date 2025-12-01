@@ -1,19 +1,29 @@
+# Este archivo se encarga de subir la API de toda la logica del proyecto utilizando FastAPI
+# corriendo la aplicaion en el puerto 5000, hace el host en 0.0.0.0 porque ya esta configurado
+# en AWS el security group para solo permitir conexiones desde la instancia que hostea la app
+# web. 
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uvicorn
-from agents import app_graph  # Importamos el grafo compilado
+from agents import app_graph
 
 app = FastAPI()
 
+# Se utiliza pydantic para asegurarnos que la pregunta del usuario siempre sera un str y no
+# hayan problemas al ingresar otro tipo de dato
+
 class QueryRequest(BaseModel):
     question: str
+
+# Se define el endpoint que se utilizara para hacer la pregunta a los agentes, se comienza
+# con la definicion de la base de la peticion
 
 @app.post("/ask")
 async def ask_agent(request: QueryRequest):
     print(f"\n📨 SOLICITUD ENTRANTE: {request.question}")
     
     try:
-        # Estado inicial
         initial_state = {
             "question": request.question,
             "analysis_logs": [],
@@ -37,9 +47,8 @@ async def ask_agent(request: QueryRequest):
         
     except Exception as e:
         print(f"❌ Error Crítico en Logic Layer: {e}")
-        # Es buena práctica imprimir el stacktrace en logs reales
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    # Corremos en 0.0.0.0 para que sea accesible desde otros contenedores
+
     uvicorn.run(app, host="0.0.0.0", port=5000)

@@ -1,10 +1,13 @@
-// --- ESTADO GLOBAL ---
+// este archivo define la logica detras de la aplicacion web, indica como se hacen las 
+// peticiones y que campos interactuan en el HTML.
+
 let appData = null; 
 let currentBook = null; 
 let currentPage = 0;
-const CHARS_PER_PAGE = 650; // Reduje un poco para dar espacio al título en negrita
+const CHARS_PER_PAGE = 650;
 
-// --- MOMENTO 1 -> 2: START ANALYSIS ---
+// Se define la funcion para mandar la peticion POST a /ask en el backend.
+
 async function startAnalysis() {
     const query = document.getElementById('userQuery').value;
     const btn = document.getElementById('startBtn');
@@ -46,7 +49,9 @@ async function startAnalysis() {
     }
 }
 
-// --- MOMENTO 2 -> 3: ABRIR LIBRO ---
+// Se define la funcion para abrir los libros que contienen los diferentes pensamientos
+// de los agentes y los documentos recuperados de la base de datos.
+
 function openBook(agentName) {
     if (!appData) return alert("Primero debes comenzar el debate.");
 
@@ -69,7 +74,6 @@ function openBook(agentName) {
     switchView('view-cover');
 }
 
-// --- HELPERS DE VISTA ---
 function switchView(viewId) {
     document.querySelectorAll('.book-view').forEach(el => el.classList.add('hidden'));
     document.getElementById(viewId).classList.remove('hidden');
@@ -80,18 +84,15 @@ function closeBook() {
     currentBook = null;
 }
 
-// --- MOMENTO 3 -> 4: CONTENIDO ---
 function goToContent(fromBack = false) {
     let fullText = "";
     let ragDocs = [];
 
     if (currentBook === "The Historian") {
-        // Obtenemos solo el texto puro, el título lo pondremos en renderPage
         fullText = appData.synthesis;
     } else {
         const log = appData.logs.find(l => l.agent === currentBook);
         if (log) {
-            // Obtenemos solo el pensamiento puro (sin concatenar título aquí)
             fullText = log.thought.trim();
             ragDocs = log.context_used || [];
         } else {
@@ -106,24 +107,17 @@ function goToContent(fromBack = false) {
     switchView('view-pages');
 }
 
-// --- RENDERIZADO DE PÁGINAS (Aquí está la magia de la Negrilla) ---
 function renderPage(fullText, ragDocs, totalPages) {
     const start = currentPage * CHARS_PER_PAGE;
     const end = start + CHARS_PER_PAGE;
     
-    // Obtenemos el fragmento de texto
     let rawPageText = fullText.substring(start, end);
-
-    // Convertimos saltos de linea (\n) a HTML (<br>) para que se vean bien con innerHTML
     let htmlPageText = rawPageText.replace(/\n/g, "<br>");
 
     const pageElement = document.getElementById('page-text');
     const ragBox = document.getElementById('rag-info');
     
-    // --- LÓGICA DE VISUALIZACIÓN ---
-    
     if (currentPage === 0) {
-        // 1. Mostrar Tweets (RAG)
         if (ragDocs.length > 0) {
             ragBox.innerHTML = "<strong>Tweets Recuperados:</strong><br>" + ragDocs.map(d => `• ${d}`).join('<br>');
             ragBox.classList.remove('hidden');
@@ -131,14 +125,12 @@ function renderPage(fullText, ragDocs, totalPages) {
             ragBox.classList.add('hidden');
         }
 
-        // 2. Determinar Título
         let title = "Pensamiento Interno:";
         if (currentBook === "The Historian") title = "Síntesis del Archivero:";
 
         pageElement.innerHTML = `<strong style="font-size: 1.1em;">${title}</strong><br>${htmlPageText}`;
         
     } else {
-        // Páginas siguientes: Solo texto, sin tweets ni título
         ragBox.classList.add('hidden');
         pageElement.innerHTML = htmlPageText;
     }
@@ -150,7 +142,6 @@ function renderPage(fullText, ragDocs, totalPages) {
     window.currentTotalPages = totalPages;
 }
 
-// --- NAVEGACIÓN ---
 function nextPage() {
     if (currentPage < window.currentTotalPages - 1) {
         currentPage++;

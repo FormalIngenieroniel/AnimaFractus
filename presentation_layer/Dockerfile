@@ -1,3 +1,8 @@
+# Este archivo se encarga de indicarle como se ejecutara la aplicacion web dentro
+# de la imagen del contenedor al archivo "deploy.sh", se le indica en que directorio
+# se creara y con que archivos. Por ultimo indica que se debe correr el archivo 
+# "app.py" en el contenedor con el puerto 8501.
+
 FROM python:3.9-slim
 
 WORKDIR /app
@@ -9,6 +14,4 @@ COPY . .
 
 EXPOSE 8501
 
-# Comando para correr Flask
-# host=0.0.0.0 permite acceso externo, port=8501 mantiene consistencia
 CMD ["python", "app.py"]

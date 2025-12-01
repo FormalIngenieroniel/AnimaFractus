@@ -1,7 +1,11 @@
+# Este archivo prueba la conexion y la respuesta de la API que contiene la logica de la
+# aplicacion, la aplicacion esta subida en el puerto 5000. Se envia un texto de prueba
+# y si la conexion esta bien, se recibe una respuesta con el pensamiento de los agentes
+# y la sintesis del historiador.
+
 import requests
 import json
 
-# Probamos contra el localhost de la instancia B
 url = "http://localhost:5000/ask"
 
 payload = {

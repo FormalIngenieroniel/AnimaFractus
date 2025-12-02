@@ -1,9 +1,7 @@
-/* --- GENERAL --- */
 body {
     margin: 0;
     padding: 0;
     background-color: #1a120b;
-    /* Asegúrate de que esta imagen exista o usa un color de fondo sólido */
     background-image: url("images/background.png"); 
     background-size: cover;
     font-family: 'Garamond', serif;
@@ -13,7 +11,6 @@ body {
     overflow: hidden;
 }
 
-/* --- SIDEBAR --- */
 #scroll-sidebar {
     width: 280px;
     background-color: #f4e4bc;
@@ -24,7 +21,7 @@ body {
     box-shadow: 5px 0 15px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
-    z-index: 20; /* Encima de todo */
+    z-index: 20;
 }
 
 #scroll-sidebar h2 { font-family: 'Courier New', monospace; border-bottom: 2px solid #3e2723; }
@@ -32,18 +29,17 @@ body {
 .online { color: #2e7d32; }
 .connecting { color: #f57f17; }
 
-/* NUEVO: ESTILO PARA LAS CARTAS DE AGENTES */
 .agent-list {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espacio entre cartas */
+    gap: 15px; 
 }
 
 .agent-card {
     display: flex;
     align-items: center;
-    background-color: #3e2723; /* Café oscuro (Dark Oak) */
+    background-color: #3e2723;
     padding: 10px;
     border-radius: 12px;
     box-shadow: 2px 4px 6px rgba(0,0,0,0.3);
@@ -60,7 +56,7 @@ body {
     width: 50px;
     height: 50px;
     margin-right: 15px;
-    border-radius: 4px; /* Un poco cuadrado como en la imagen */
+    border-radius: 4px; 
     border: 1px solid #8d6e63;
     object-fit: cover;
     background-color: #000;
@@ -69,20 +65,18 @@ body {
 .agent-name {
     font-family: 'Garamond', serif;
     font-size: 1.5rem;
-    color: #f4e4bc; /* Color crema/papel para el texto */
+    color: #f4e4bc;
     font-weight: bold;
     text-shadow: 1px 1px 2px #000;
 }
 
-
-/* --- CONTENIDO PRINCIPAL --- */
 main {
     padding: 20px;
     padding-left: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Empezar desde arriba */
+    justify-content: flex-start;
     position: relative;
 }
 
@@ -94,7 +88,6 @@ main {
     letter-spacing: 2px;
 }
 
-/* Barra de Búsqueda */
 .input-section {
     width: 400%;
     max-width: 900px;
@@ -125,26 +118,23 @@ button#startBtn {
     font-size: 1.1rem;
     cursor: pointer;
     font-weight: bold;
-    box-shadow: 0 4px 0 #1b5e20; /* Efecto 3D botón */
+    box-shadow: 0 4px 0 #1b5e20;
 }
 button#startBtn:active { transform: translateY(4px); box-shadow: none; }
 
-/* --- ESCENA DE LA LIBRERÍA (CORREGIDO CENTRADO) --- */
 .bookshelf-scene {
     position: relative;
-    width: 100%;         /* Ocupar ancho disponible */
-    max-width: 800px;    /* Limitar ancho máximo */
+    width: 100%;         
+    max-width: 800px;  
     height: 450px;
     display: flex;
-    justify-content: center; /* CENTRADO TOTAL */
+    justify-content: center; 
     align-items: center;
-    /* margin-right eliminado para evitar el desfase */
 }
 
-/* PERSONAJE GUÍA */
 .guide-character {
     position: absolute;
-    right: -180px; /* Ajustado para que no tape la estantería al centrar */
+    right: -180px;
     bottom: 20px;
     width: 160px;
     z-index: 15; 
@@ -152,15 +142,14 @@ button#startBtn:active { transform: translateY(4px); box-shadow: none; }
 }
 .guide-character:hover { transform: scale(1.1); }
 .guide-character img { 
-    width: 240%; /* Ajuste del tamaño del personaje */
+    width: 240%;
     filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.7)); 
 }
 
-/* ESTANTERÍA - CONTENEDOR GRID */
 .bookshelf {
     position: relative;
-    width: 350px;  /* Ancho fijo */
-    height: 350px; /* Alto fijo */
+    width: 350px;  
+    height: 350px;
     
     background-image: url("images/empty_bookshelf.png");
     background-size: 100% 100%; 
@@ -176,7 +165,6 @@ button#startBtn:active { transform: translateY(4px); box-shadow: none; }
     justify-content: space-between; 
 }
 
-/* FILAS DE LIBROS */
 .shelf-row {
     display: flex;
     align-items: flex-end; 
@@ -193,7 +181,6 @@ button#startBtn:active { transform: translateY(4px); box-shadow: none; }
     padding-left: 85px;
 }
 
-/* ESTILO DE LOS LIBROS */
 .book-spine {
     width: 55px;  
     height: 140px; 
@@ -214,7 +201,6 @@ button#startBtn:active { transform: translateY(4px); box-shadow: none; }
     box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
 }
 
-/* --- OVERLAY / MODAL --- */
 .hidden { display: none !important; }
 
 #book-overlay {
@@ -234,7 +220,7 @@ button#startBtn:active { transform: translateY(4px); box-shadow: none; }
 
 .book-modal {
     position: relative;
-    width: 90%; max-width: 700px; /* Un poco más ancho para el libro abierto */
+    width: 90%; max-width: 700px;
     height: 85vh; max-height: 800px;
     z-index: 2001;
     display: flex;
@@ -245,57 +231,38 @@ button#startBtn:active { transform: translateY(4px); box-shadow: none; }
 .book-view { width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center;}
 .cover-image { max-height: 100%; max-width: 100%; border-radius: 5px; box-shadow: 0 0 40px rgba(0,0,0,0.8); }
 
-/* CONTENIDO DEL LIBRO (CONTENEDOR DE FONDO) */
 .page-paper {
     width: 100%; 
     height: 100%;
-    
-    /* El JS sigue inyectando aquí la imagen */
     background-color: transparent; 
-    
-    /* Configuración de la imagen de fondo */
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
-
-    /* IMPORTANTE: Posición relativa para que el hijo absoluto se guíe por esto */
     position: relative; 
-    
-    /* Quitamos el padding y el scroll de aquí, ahora lo manejará la máscara */
     padding: 0; 
     overflow: hidden; 
     border: none;
     box-shadow: none;
 }
 
-/* NUEVO: MÁSCARA DE TEXTO */
 .book-text-mask {
-    /* POSICIONAMIENTO MANUAL */
+
     position: absolute;
-    
-    /* Ajusta estos valores (%) para mover la caja de texto sobre la hoja */
-    top: 8%;      /* Baja el texto desde arriba */
-    left: 22%;     /* Empuja el texto desde la izquierda */
-    
-    /* TAMAÑO DE LA CAJA DE TEXTO */
-    width: 50%;    /* Qué tan ancho es el texto respecto a la imagen */
-    height: 70%;   /* Qué tan alto es el texto respecto a la imagen */
-    
-    /* ESTILOS DE TEXTO */
+    top: 8%;    
+    left: 22%; 
+    width: 50%;   
+    height: 70%; 
     color: #2b1f16;
     font-size: 1.25rem;
     line-height: 1.6;
-    
-    /* El scroll ahora ocurre SOLO dentro de esta caja pequeña */
     overflow-y: auto; 
-    padding-right: 15px; /* Espacio para que la barra de scroll no pegue al texto */
+    padding-right: 15px;
 }
 
-/* Scrollbar personalizado (aplicado a la máscara) */
 .book-text-mask::-webkit-scrollbar { width: 8px; }
+
 .book-text-mask::-webkit-scrollbar-thumb { background: rgba(62, 39, 35, 0.5); border-radius: 4px; }
 
-/* Navegación */
 .nav-arrow {
     position: absolute;
     background: none; border: none;
@@ -304,7 +271,7 @@ button#startBtn:active { transform: translateY(4px); box-shadow: none; }
     top: 50%; transform: translateY(-50%);
 }
 .nav-arrow:hover { color: white; }
-.left-arrow { left: -90px; } /* Movidas un poco más afuera */
+.left-arrow { left: -90px; }
 .right-arrow { right: -90px; }
 
 .close-book-btn {

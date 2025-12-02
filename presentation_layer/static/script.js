@@ -4,7 +4,7 @@
 let appData = null; 
 let currentBook = null; 
 let currentPage = 0;
-const CHARS_PER_PAGE = 650;
+const CHARS_PER_PAGE = 400;
 
 // Se define la funcion para mandar la peticion POST a /ask en el backend.
 
@@ -74,15 +74,24 @@ function openBook(agentName) {
     switchView('view-cover');
 }
 
+// Se define una funcion para integrar "helpers" de la visualizacion.
+
 function switchView(viewId) {
     document.querySelectorAll('.book-view').forEach(el => el.classList.add('hidden'));
     document.getElementById(viewId).classList.remove('hidden');
 }
 
+// Se define una funcion para poder cerrar el libro una vez se haya abierto.
+
 function closeBook() {
     document.getElementById('book-overlay').classList.add('hidden');
     currentBook = null;
 }
+
+// Se define una funcion para poder mostrar el contenido del libro, se hace una verificacion
+// para saber si se esta viendo el libro del Historiador o de los otros agentes. Si esta en
+// el libro del historiador, solo se muestra el texto, de lo contrario se busca primero los
+// tres tweets que se recuperaron para ponerlos primero en la pagina.
 
 function goToContent(fromBack = false) {
     let fullText = "";
@@ -100,12 +109,19 @@ function goToContent(fromBack = false) {
         }
     }
 
+    // Se define una funcion para dividir el texto por paginas, esto para no sobrecargar
+    // la informacion y poder darle un toque mas interactivo e inmersivo a la aplicacion
+    
     const totalPages = Math.ceil(fullText.length / CHARS_PER_PAGE);
     if (fromBack) currentPage = totalPages - 1;
 
     renderPage(fullText, ragDocs, totalPages);
     switchView('view-pages');
 }
+
+// Se define la funcion para renderizar las paginas del libro, se encarga de ver donde 
+// comienza y termina segun el numero de paginas, tambien se encarga de estandarizar 
+// como se va a mostrar la informacion, estableciendo unos titulos iguales.
 
 function renderPage(fullText, ragDocs, totalPages) {
     const start = currentPage * CHARS_PER_PAGE;
@@ -142,6 +158,9 @@ function renderPage(fullText, ragDocs, totalPages) {
     window.currentTotalPages = totalPages;
 }
 
+// Se declara una funcion para poder pasar a la siguiente pagina, hace un calculo para
+// saber si es posible realizar este paso de pagina segun el numero de ellas.
+
 function nextPage() {
     if (currentPage < window.currentTotalPages - 1) {
         currentPage++;
@@ -150,6 +169,9 @@ function nextPage() {
         switchView('view-back');
     }
 }
+
+// Se declara una funcion para poder pasar a la anterior pagina, hace un calculo para
+// saber si es posible realizar este paso de pagina segun el numero de ellas.
 
 function prevPage() {
     if (currentPage > 0) {

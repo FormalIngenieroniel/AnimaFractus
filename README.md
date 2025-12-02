@@ -1,20 +1,3 @@
-
----
-
-El Contexto: Nos situamos en la ventana crítica de Abril a Junio de 2020. El mundo está en "Pausa". No es un momento estático; es un periodo de adaptación forzada.
-
-Abril: Choque inicial, encierro total, miedo agudo.
-
-Mayo: Adaptación, búsqueda de escape (digital/financiero).
-
-Junio: Fatiga pandémica, "nueva normalidad", reactivación de esperanza y codicia.
-
-La Problemática: Los modelos actuales de GenAI y análisis de datos suelen ser monolíticos. Si preguntas "¿Cómo estaba el mundo?", te dan una respuesta promediada que aplana la realidad. El problema es que la realidad social es disonante: mientras un sector de la población teme por su vida (Salud), otro ve la mayor oportunidad financiera de la década (Crypto), y otro se refugia en el arte y la introspección (Cultura/Kojima). Sin una arquitectura que separe y luego sintetice estas visiones, es imposible entender la complejidad de la psiquis humana durante una crisis.
-
-La Solución: Una aplicación distribuida en AWS que emplea LangGraph para orquestar un debate entre tres agentes con "Weltanschauung" (visiones del mundo) radicalmente opuestas. El sistema no solo recupera datos, sino que simula la fricción entre la supervivencia, la codicia y la filosofía a lo largo del tiempo.
-
----
-
 # 🧠 Multi-Agent Social Cognitive Dissonance Analysis – Distributed AI System in Cloud
 
 This project implements a **Distributed Multi-Agent System** capable of analyzing user queries from three distinct psychological perspectives.

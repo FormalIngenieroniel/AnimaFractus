@@ -1,8 +1,5 @@
-Idea principal:
 
-1. El Contexto y Problemática
-
-Título: Anima Fractus: Análisis de Disonancia Cognitiva Social mediante Arquitectura Multi-Agente Distribuida en Cloud.
+---
 
 El Contexto: Nos situamos en la ventana crítica de Abril a Junio de 2020. El mundo está en "Pausa". No es un momento estático; es un periodo de adaptación forzada.
 
@@ -16,133 +13,139 @@ La Problemática: Los modelos actuales de GenAI y análisis de datos suelen ser 
 
 La Solución: Una aplicación distribuida en AWS que emplea LangGraph para orquestar un debate entre tres agentes con "Weltanschauung" (visiones del mundo) radicalmente opuestas. El sistema no solo recupera datos, sino que simula la fricción entre la supervivencia, la codicia y la filosofía a lo largo del tiempo.
 
-2. Flujo de Componentes (La Arquitectura Viva)
-Así se ve el proceso cuando un usuario interactúa con tu sistema distribuido:
+---
 
-Capa de Presentación (EC2 Web - Flask/Streamlit):
+# 🧠 Multi-Agent Social Cognitive Dissonance Analysis – Distributed AI System in Cloud
 
-El usuario introduce: "¿Cómo cambió la percepción de la esperanza entre el inicio del encierro en abril y el cansancio de junio?"
+This project implements a **Distributed Multi-Agent System** capable of analyzing user queries from three distinct psychological perspectives.
 
-Esta capa envía el JSON a la capa lógica.
+It integrates **Retrieval-Augmented Generation (RAG)** using ChromaDB, LangGraph for agent workflow orchestration, and Google Gemini for text generation.
 
-Capa Lógica (EC2 App - LangGraph + MCP Host):
+The architecture is deployed across **three separate AWS EC2 instances**, simulating a scalable, microservices-oriented production environment divided into Data, Logic, and Presentation layers.
 
-Recibe la pregunta.
+---
 
-Agente Orquestador: Desglosa la pregunta en dos hitos temporales: [Hito 1: 1-15 Abril] y [Hito 2: 1-15 Junio].
+## 🤖 Introduction to the AI Architecture
 
-Activa a los 3 Agentes de Personalidad.
+Artificial Intelligence (AI) in this project is not just a chatbot, but a system of cooperating entities known as Intelligent Agents:
 
-Capa de Datos (EC2 DB - ChromaDB + HuggingFace Embeddings):
+- **Agent:** An autonomous entity that perceives context, from a vector database, and generates unique insights based on a specific persona.
+- **Contextual Awareness:** The agents do not hallucinate, they ground their responses in real dataset embeddings, being Tweets about Covid, Disasters, Markets, and Hideo Kojima.
+- **Orchestration:** A graph-based workflow ensures that agents "think" sequentially before a final synthesizer compiles the results.
 
-Los agentes usan el protocolo MCP para llamar herramientas como get_crypto_context(date='2020-04').
+In this project, the system is modeled as a Cognitive Pipeline:
 
-ChromaDB devuelve los tweets semánticamente relevantes para "esperanza/futuro" en esas fechas.
+- **Perception** → Vector similarity search in ChromaDB.
+- **Decision-making** → The agents Survivor, Speculator and Auteur analyze data and form a thought.
+- **Synthesis** → A "Historian" agent compiles the conflicting viewpoints into a narrative conclusion.
 
-3. Simulación de Ejecución: El Pensamiento de los Agentes
-Esta es la parte central. Así es como se vería el log interno del sistema (o lo que podrías mostrar en una pestaña de "Debug" en tu web para impresionar a los evaluadores).
+---
 
-Pregunta del Usuario: "¿Cómo evolucionó la idea de 'futuro' de Abril a Junio?"
+## 🚀 Features
 
---- FASE 1: ANÁLISIS DEL MES DE ABRIL (El Choque) ---
-🤖 AGENTE A: "THE SURVIVOR" (Data: Covid + Disasters) Contexto recuperado: Tweets sobre colapso hospitalario, falta de mascarillas, hashtags #StayHome. Pensamiento (Chain of Thought): "El usuario pregunta por el futuro. Mis datos indican que en Abril el concepto de futuro ha desaparecido. El horizonte temporal es de 24 horas. El miedo es el sentimiento dominante. Comparado con los desastres de Enero, esto es sistémico." Output Interno: "En abril, el futuro no existe. Solo existe la supervivencia inmediata. La esperanza es un lujo peligroso que lleva a descuidar la seguridad."
+-☁️ **Distributed Cloud Architecture:** Deployed across 3 distinct AWS EC2 instances (Data, Logic, Presentation).
+-🐳 **Dockerized Microservices:** Each layer runs in isolated containers for portability and scalability.
+-🧠 **RAG (Retrieval-Augmented Generation):** Uses SentenceTransformer to fetch relevant context before generating answers.
+-🎭 **Multi-Persona AI:** Three distinct agents with unique vocabularies and worldviews (Biosecurity, Finance, Art).
+-🔗 **LangGraph Workflow:** State-based execution graph ensuring structured flow from analysis to synthesis.
+-⚡ **FastAPI & Flask Integration:** Separates the logic API from the user-facing web interface.
+-💾 **Persistent Vector Database:** ChromaDB maintains embeddings even after container restarts.
+-🎨  **Interactive user interface:** Uses a simple and creative function to interact with the user.
 
-🤖 AGENTE B: "THE SPECULATOR" (Data: Crypto Market) Contexto recuperado: Caída masiva de Marzo recuperándose, incertidumbre en los mercados, volatilidad extrema. Pensamiento (Chain of Thought): "El miedo del Agente A es mi oportunidad. Veo gráficos en rojo que empiezan a ponerse verdes. El 'futuro' en abril es una apuesta. Quienes compren ahora serán ricos." Output Interno: "El futuro está en oferta. Mientras el mundo se esconde, el dinero inteligente se está moviendo. Abril es el punto de entrada máximo."
+---
 
-🤖 AGENTE C: "THE AUTEUR" (Data: Hideo Kojima) Contexto recuperado: Tweets sobre ver películas antiguas, escuchar lluvia, fotos de comida solitaria, edición de video remota. Pensamiento (Chain of Thought): "Todos están desconectados físicamente. Como en mi juego, Death Stranding. El futuro es una habitación cerrada con una pantalla." Output Interno: "El futuro se ha vuelto interior. Escucho la lluvia. Veo una película de hace 30 años. El tiempo se ha detenido, no hay futuro, solo un eterno presente conectado por cables."
+## 💻 System Architecture & Workflow
 
---- FASE 2: ANÁLISIS DEL MES DE JUNIO (La Adaptación) ---
-🤖 AGENTE A: "THE SURVIVOR" Output Interno: "Junio trae complacencia. Las cifras siguen ahí, pero la gente ha perdido el miedo agudo. El futuro ahora es una 'nueva normalidad' que me aterra porque bajamos la guardia."
+The project is divided into three distinct layers, each running on its own server (EC2 Instance), this is a brief explanation of the main files.
 
-🤖 AGENTE B: "THE SPECULATOR" Output Interno: "¡Confirmación! El mercado se recupera. Mis predicciones de abril eran correctas. El futuro en junio es eufórico para el capital digital. La crisis fue el mejor catalizador."
+1.  **Data Layer (The Memory):** Responsible for storing and retrieving semantic knowledge.
 
-🤖 AGENTE C: "THE AUTEUR" Output Interno: "He comprado una figura nueva. Sigo editando. La soledad se ha vuelto rutina. Hemos aprendido a construir puentes sin tocarnos. El futuro es este estado híbrido."
+    -**start_chroma.sh:** Initializes the ChromaDB Docker container with persistent storage volumes.
+    -**etl_script.py: A** It reads raw CSV datasets (Covid, Disasters, Stocks and Kojima), converts them into vector embeddings using all-MiniLM-L6-v2, and loads them into the database.
 
---- FASE 3: SÍNTESIS FINAL (Node: The Synthesizer) ---
-Generando respuesta final al usuario...
+2. **Logic Layer (The Brain):** Responsible for processing, reasoning, and generating text.
 
-"Entre Abril y Junio de 2020, la percepción del futuro sufrió una bifurcación radical:
+    -**main.py:** The entry point for the FastAPI server. It exposes the /ask endpoint that triggers the agent workflow.
+    -**agents.py:** The core intelligence.
+        -Defines the StateGraph workflow.
+        -Configures the 3 personas (Survivor, Speculator, Auteur).
+        -Executes the logic: Query Database → Prompt Engineering → LLM Generation → Response Cleaning.
+        -Define the graph of the chain of thought for the different agents in the following order: Survivor → Speculator → Auteur → Synthesizer → END
 
-Abril (Parálisis): Fue el mes de la negación del futuro. Mientras la población general (Survivor) vivía al día por miedo biológico, y los creativos (Auteur) se refugiaban en la introspección y la nostalgia, solo el capital especulativo (Speculator) veía un futuro, aunque fuera puramente transaccional.
+4. **Presentation Layer (The Face):** Responsible for user interaction in a interactive library.
 
-Junio (Aceptación Fragmentada): Para junio, la 'esperanza' regresó pero deformada. No es un retorno a la normalidad, sino una adaptación. La angustia se convirtió en rutina (Kojima), el miedo en precaución fatigada (Covid), y la incertidumbre financiera se transformó en una agresiva recuperación digital (Crypto).
+    -**app.py:** A Flask web server that renders the HTML interface and forwards user questions to the Logic Layer via HTTP requests.
+    -**deploy.sh:** Automates the build and deployment of the web container, handling port mapping (8501) and cleanup of old images.
 
-Conclusión: La humanidad no recuperó su viejo futuro; construyó tres realidades paralelas para sobrevivir."
+---
 
-4. Salida Deseada (El Entregable)
-El proyecto entrega una aplicación web simple pero potente donde:
+## 🧩 How It Works
 
-Frontend: Ves el chat limpio.
+**User Input:** A user asks a question via the Web Interface (Presentation Layer).
 
-Sidebar (Valor Agregado): Muestra en tiempo real qué herramienta está usando cada agente ("Survivor está leyendo base de datos: covid_tweets...", "Speculator está analizando: btc_prices...").
+**Request Forwarding:** The Flask app forwards the query to the Logic Layer API.
 
-Respuesta: Texto enriquecido generado por un modelo de HuggingFace (ej. Mistral-7B-Instruct) que sintetiza el debate.
+**Context Retrieval:** The Logic Layer embeds the query and searches the Data Layer (ChromaDB) for relevant tweets/texts.
 
-Indice de carpetas:
+**Agent Analysis:**
+    -Survivor analyzes the data looking for threats and biological risks.
+    -Speculator looks for market patterns and financial opportunities.
+    -Auteur interprets the situation through a lens of artistic melancholy and connection.
 
-AnimaFractus/
+**Synthesis:** The Historian agent takes these three conflicting logs and writes a summary highlighting the "social cognitive dissonance."
 
-│
+**Response:** The final narrative and the individual agent logs are sent back to the frontend for display in a interactive library.
 
-├── .gitignore             # Archivo global (ignora venv/, __pycache__, .env)
+---
 
-├── README.md              # Documentación general
+## 📷 Screenshots 
 
-│
+---
 
-├── data_layer/            # TODO LO DE LA INSTANCIA A (EC2 DATA)
+## 🧠 Agent Personalities
 
-│   ├── Dockerfile         # Para crear la imagen de setup/ETL
+The system uses prompt engineering to enforce strict behavioral protocols:
 
-│   ├── requirements.txt   # chromadb, pandas, sentence-transformers
+**The Survivor (Biosecurity Officer)**
+    -Focus: Viral loads, containment protocols, quarantine.
+    -Style: Paranoid, military-technical, urgent.
+    -Context Source: Covid-19 & Disaster datasets.
 
-│   ├── etl_script.py      # Script que lee los CSV y carga ChromaDB
+**The Speculator (Quantitative Analyst)**
+    -Focus: ROI, volatility, support levels, liquidity.
+    -Style: Cold, mathematical, indifferent to human tragedy.
+    -Context Source: Stock Market datasets.
 
-│   ├── datasets/          # Carpeta con tus CSVs (covid.csv, kojima.csv...)
+**The Auteur (Visionary Director)**
+    -Focus: Strands, isolation, soul, connections.
+    -Style: Enigmatic, short aphorisms, cinematic.
+    -Context Source: Hideo Kojima / Social commentary datasets.
 
-│   └── start_chroma.sh    # Script auxiliar para arrancar la DB
+---
 
-│
+## 🔧 Tech Stack & Requirements
 
-├── logic_layer/           # TODO LO DE LA INSTANCIA B (EC2 APP)
+-**Cloud Infrastructure:** AWS EC2 (3 Instances).
+-**Containerization:** Docker, Docker Compose.
+-**Languages:** Python 3.9 / 3.11.
+-**AI Frameworks:** LangChain, LangGraph.
+-**LLM Provider:** Google Gemini (via langchain-google-genai).
+-**Vector Database:** ChromaDB.
+-**Embeddings:** HuggingFace all-MiniLM-L6-v2.
+-**Web Frameworks:** FastAPI (Backend), Flask (Frontend).
 
-│   ├── Dockerfile         # Para el servidor API
+---
 
-│   ├── requirements.txt   # fastapi, langgraph, langchain, uvicorn, requests
+## 📊 Future Improvements
 
-│   ├── main.py            # El servidor FastAPI (Entrypoint)
+-🔄 **Real-time Ingestion:** Connect the ETL script to live Twitter/X APIs for real-time context using Lambda functions for web scrapping.
+-🧹 **Advanced Data Preprocessing:** Implement rigorous text cleaning pipelines to strip noise and irrelevant characters from tweets, ensuring higher fidelity embeddings and more accurate semantic retrieval.
+-🛠️ **Metadata-Driven Tool Use:** Integrate Named Entity Recognition (NER) during the ETL process to extract key entities. Agents can then use this metadata to trigger specific tools or enrich their context dynamically.
+-🗣️ **Non-Linear Agent Debate**: Transition from a linear LangGraph workflow to a cyclic, conversational topology. This would allow agents to debate, challenge each other's viewpoints, and refine insights through multi-turn dialogue rather than just outputting isolated thoughts.
+-🎓 **Specialized Historian Model:** Move beyond standard prompt engineering by fine-tuning a specific model on sociological datasets. This ensures the "Historian" becomes an expert in analyzing social cognitive dissonance rather than relying solely on general-purpose inference.
 
-│   ├── graph_builder.py   # La lógica de LangGraph (Nodos y aristas)
+---
 
-│   └── agents.py          # Los prompts y lógica de los 3 agentes
+## 👨‍💻 Author
 
-│
-
-└── presentation_layer/    # TODO LO DE LA INSTANCIA C (EC2 WEB)
-
-.    ├── Dockerfile         # Para streamlit
-    
-.    ├── requirements.txt   # streamlit, requests, pandas
-    
-.    └── app.py             # La interfaz gráfica
-
-
-Configuracion de seguridad:
-
-Security Group "SG-DATA" (Para Instancia A):
-
-Tipo: Custom TCP | Puerto: 8000 | Source: IP Privada de Instancia B (Logic).
-
-Tipo: SSH | Puerto: 22 | Source: My IP (Para que tú entres).
-
-Security Group "SG-LOGIC" (Para Instancia B):
-
-Tipo: Custom TCP | Puerto: 5000 | Source: IP Privada de Instancia C (Web).
-
-Tipo: SSH | Puerto: 22 | Source: My IP.
-
-Security Group "SG-WEB" (Para Instancia C):
-
-Tipo: Custom TCP | Puerto: 8501 | Source: 0.0.0.0/0 (Todo el mundo).
-
-Tipo: SSH | Puerto: 22 | Source: My IP.
+Developed by Daniel Bernal.

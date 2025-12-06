@@ -126,9 +126,11 @@ Auteur:
 
 Historiador:
   Síntesis del Archivero: |
-    La disonancia cognitiva se manifiesta entre sobrevivencia,
-    cálculos económicos fríos y soledad digital.
-    Una brecha cognitiva social que define la era post-evento.
+    ** La Disonancia Cognitiva en la Era Post-Evento**
+
+    El Survivor, anclado en el miedo y la evidencia empírica, observa una peligrosa complacencia social ante amenazas latentes, exigiendo disciplina. El Speculator, ajeno a las emociones humanas, navega la           frialdad de los mercados, donde solo importan los patrones de liquidez y la ausencia de volatilidad. Mientras tanto, el Auteur reflexiona sobre la paradoja de la conexión digital: un lazo que une y aísla,        tejiendo un futuro de soledad digital.
+
+    Esta disonancia entre la percepción individual del riesgo, la lógica financiera desapegada y la introspección melancólica revela una profunda brecha cognitiva social. La gente parece incapaz de integrar la       urgencia de la supervivencia con la normalidad percibida o el cálculo económico, un fenómeno digno de estudio para comprender la resiliencia y la adaptación humana.
 
 ```
 

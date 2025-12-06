@@ -90,20 +90,14 @@ The project is divided into three distinct layers, each running on its own serve
 ### ❓ Pregunta
 > **¿Cómo ha cambiado la manera de pensar de la gente?**
 
----
-
-### 🧩 Survivor
+### 🩺 Survivor
 **Tweets Recuperados**
 > • The spike in COVID-19 cases...  
 > • A #COVID19 outbreak...  
 > • Patients demand to be sent home...
 
 **Pensamiento Interno**
-> La gente subestima la amenaza.  
-> Ignoran los protocolos.  
-> La disciplina es esencial.
-
----
+> a gente parece subestimar la amenaza latente. Los datos de centros de cuarentena y hospitales confirman un aumento de la carga viral. Exigen ser liberados de la zona cero, ignorando los protocolos de contención. Su complacencia es un vector de propagación inaceptable. Debemos reforzar la disciplina.
 
 ### 📈 Speculator
 **Tweets Recuperados**
@@ -112,10 +106,7 @@ The project is divided into three distinct layers, each running on its own serve
 > • Volatility dead...
 
 **Pensamiento Interno**
-> Solo importan patrones de liquidez.  
-> La volatilidad está muerta.
-
----
+> La volatilidad actual está muerta, como indica Lakshmi_888. Esto sugiere una complacencia en el mercado, una divergencia de la volatilidad observada previamente según imtftrader. Los índices como el US500 y el DAX muestran un impulso menguante en niveles de resistencia críticos. La percepción humana de "grandes beneficios" es irrelevante; solo importan los patrones de liquidez y los niveles de soporte.
 
 ### 🎭 Auteur
 **Tweets Recuperados**
@@ -124,8 +115,18 @@ The project is divided into three distinct layers, each running on its own serve
 > • Death Stranding...
 
 **Pensamiento Interno**
-> La red nos une y nos aísla.  
-> Soledad digital.
+> La red nos une. Y nos aísla.
+La empatía a distancia, un hilo frágil.
+El futuro se construye. Conectando lo desconectado.
+La soledad digital es el nuevo desierto. Un paisaje de datos.
+La vida mañana. ¿Será un eco de nosotros mismos?
+
+### 🌎 Historian
+
+**Síntesis del Archivero**
+> ** La Disonancia Cognitiva en la Era Post-Evento**
+El Survivor, anclado en el miedo y la evidencia empírica, observa una peligrosa complacencia social ante amenazas latentes, exigiendo disciplina. El Speculator, ajeno a las emociones humanas, navega la frialdad de los mercados, donde solo importan los patrones de liquidez y la ausencia de volatilidad. Mientras tanto, el Auteur reflexiona sobre la paradoja de la conexión digital: un lazo que une y aísla, tejiendo un futuro de soledad digital.
+Esta disonancia entre la percepción individual del riesgo, la lógica financiera desapegada y la introspección melancólica revela una profunda brecha cognitiva social. La gente parece incapaz de integrar la urgencia de la supervivencia con la normalidad percibida o el cálculo económico, un fenómeno digno de estudio para comprender la resiliencia y la adaptación humana.
 
 ---
 

@@ -85,6 +85,17 @@ The project is divided into three distinct layers, each running on its own serve
 
 ---
 
+## 📚 Example of the output 
+
+```python
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("GitHub User")
+```
+
+---
+
 ## 🧠 Agent Personalities
 
 The system uses prompt engineering to enforce strict behavioral protocols:

@@ -6,7 +6,7 @@ It integrates **Retrieval-Augmented Generation (RAG)** using ChromaDB, LangGraph
 
 The architecture is deployed across **three separate AWS EC2 instances**, simulating a scalable, microservices-oriented production environment divided into Data, Logic, and Presentation layers.
 
-> 📄 **Project Presentation:** For a detailed overview of the research, objetives, and results, check the [**Final Project Document**](AnimaFractus/Trabajo%20Final%20GenAI%20Daniel%20Bernal.pdf).
+> 📄 **Project Presentation:** For a detailed overview of the research, objetives, and results, check the [**Final Project Document**](Trabajo%20Final%20GenAI%20Daniel%20Bernal.pdf).
 
 ---
 

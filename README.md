@@ -6,6 +6,8 @@ It integrates **Retrieval-Augmented Generation (RAG)** using ChromaDB, LangGraph
 
 The architecture is deployed across **three separate AWS EC2 instances**, simulating a scalable, microservices-oriented production environment divided into Data, Logic, and Presentation layers.
 
+> 📄 **Project Presentation:** For a detailed overview of the research, objetives, and results, check the [**Final Project Document**](AnimaFractus/Trabajo%20Final%20GenAI%20Daniel%20Bernal.pdf).
+
 ---
 
 ## 🤖 Introduction to the AI Architecture
@@ -81,6 +83,27 @@ The project is divided into three distinct layers, each running on its own serve
 
 ---
 
+## 🧠 Agent Personalities
+
+The system uses prompt engineering to enforce strict behavioral protocols:
+
+**The Survivor (Biosecurity Officer)**
+    - Focus: Viral loads, containment protocols, quarantine.
+    - Style: Paranoid, military-technical, urgent.
+    - Context Source: Covid-19 & Disaster datasets.
+
+**The Speculator (Quantitative Analyst)**
+    - Focus: ROI, volatility, support levels, liquidity.
+    - Style: Cold, mathematical, indifferent to human tragedy.
+    - Context Source: Stock Market datasets.
+
+**The Auteur (Visionary Director)**
+    - Focus: Strands, isolation, soul, connections.
+    - Style: Enigmatic, short aphorisms, cinematic.
+    - Context Source: Hideo Kojima / Social commentary datasets.
+
+---
+
 ## 📷 Screenshots 
 
 ---
@@ -127,27 +150,6 @@ La vida mañana. ¿Será un eco de nosotros mismos?
 > ** La Disonancia Cognitiva en la Era Post-Evento**
 El Survivor, anclado en el miedo y la evidencia empírica, observa una peligrosa complacencia social ante amenazas latentes, exigiendo disciplina. El Speculator, ajeno a las emociones humanas, navega la frialdad de los mercados, donde solo importan los patrones de liquidez y la ausencia de volatilidad. Mientras tanto, el Auteur reflexiona sobre la paradoja de la conexión digital: un lazo que une y aísla, tejiendo un futuro de soledad digital.
 Esta disonancia entre la percepción individual del riesgo, la lógica financiera desapegada y la introspección melancólica revela una profunda brecha cognitiva social. La gente parece incapaz de integrar la urgencia de la supervivencia con la normalidad percibida o el cálculo económico, un fenómeno digno de estudio para comprender la resiliencia y la adaptación humana.
-
----
-
-## 🧠 Agent Personalities
-
-The system uses prompt engineering to enforce strict behavioral protocols:
-
-**The Survivor (Biosecurity Officer)**
-    - Focus: Viral loads, containment protocols, quarantine.
-    - Style: Paranoid, military-technical, urgent.
-    - Context Source: Covid-19 & Disaster datasets.
-
-**The Speculator (Quantitative Analyst)**
-    - Focus: ROI, volatility, support levels, liquidity.
-    - Style: Cold, mathematical, indifferent to human tragedy.
-    - Context Source: Stock Market datasets.
-
-**The Auteur (Visionary Director)**
-    - Focus: Strands, isolation, soul, connections.
-    - Style: Enigmatic, short aphorisms, cinematic.
-    - Context Source: Hideo Kojima / Social commentary datasets.
 
 ---
 

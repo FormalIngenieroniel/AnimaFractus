@@ -87,52 +87,45 @@ The project is divided into three distinct layers, each running on its own serve
 
 ## 📚 Example of the output 
 
-```text
-Pregunta: >
-  ¿Cómo ha cambiado la manera de pensar de la gente?
+### ❓ Pregunta
+> **¿Cómo ha cambiado la manera de pensar de la gente?**
 
-Survivor:
-  Tweets Recuperados: |
-    • RT @geemurie: The spike in COVID-19 cases detected from...
-    • RT @Univ_inenglish: A #COVID19 outbreak was confirmed...
-    • RT @dhanyarajendran: At Chennai quarantine facility...
+---
 
-  Pensamiento Interno: |
-    La gente parece subestimar la amenaza latente.
-    Los datos de centros de cuarentena confirman un aumento.
-    Exigen ser liberados, ignorando los protocolos.
+### 🧩 Survivor
+**Tweets Recuperados**
+> • The spike in COVID-19 cases...  
+> • A #COVID19 outbreak...  
+> • Patients demand to be sent home...
 
-Speculator:
-  Tweets Recuperados: |
-    • RT @imtftrader: $stock market investment trades...
-    • RT @ChurchillLloyd1: Equity Markets: Positive...
-    • RT @Lakshmi_888: Volatility currently dead...
+**Pensamiento Interno**
+> La gente subestima la amenaza.  
+> Ignoran los protocolos.  
+> La disciplina es esencial.
 
-  Pensamiento Interno: |
-    La volatilidad está muerta.
-    Esto sugiere complacencia en el mercado.
-    Importan patrones de liquidez, no percepciones humanas.
+---
 
-Auteur:
-  Tweets Recuperados: |
-    • “Future and the Arts: AI, Robotics, Cities, Life…”
-    • Long-Distance Empathy: Interview with Hideo Kojima...
-    • How "Death Stranding" bridges videogames and cinema...
+### 📈 Speculator
+**Tweets Recuperados**
+> • $stock market investment trades...  
+> • Equity Markets: Positive...  
+> • Volatility dead...
 
-  Pensamiento Interno: |
-    La red nos une. Y nos aísla.
-    La empatía a distancia, un hilo frágil.
-    La vida mañana, un eco de nosotros mismos.
+**Pensamiento Interno**
+> Solo importan patrones de liquidez.  
+> La volatilidad está muerta.
 
-Historiador:
-  Síntesis del Archivero: |
-    ** La Disonancia Cognitiva en la Era Post-Evento**
+---
 
-    El Survivor, anclado en el miedo y la evidencia empírica, observa una peligrosa complacencia social ante amenazas latentes, exigiendo disciplina. El Speculator, ajeno a las emociones humanas, navega la           frialdad de los mercados, donde solo importan los patrones de liquidez y la ausencia de volatilidad. Mientras tanto, el Auteur reflexiona sobre la paradoja de la conexión digital: un lazo que une y aísla,        tejiendo un futuro de soledad digital.
+### 🎭 Auteur
+**Tweets Recuperados**
+> • Future and the Arts...  
+> • Interview with Hideo Kojima...  
+> • Death Stranding...
 
-    Esta disonancia entre la percepción individual del riesgo, la lógica financiera desapegada y la introspección melancólica revela una profunda brecha cognitiva social. La gente parece incapaz de integrar la       urgencia de la supervivencia con la normalidad percibida o el cálculo económico, un fenómeno digno de estudio para comprender la resiliencia y la adaptación humana.
-
-```
+**Pensamiento Interno**
+> La red nos une y nos aísla.  
+> Soledad digital.
 
 ---
 

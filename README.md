@@ -1,5 +1,3 @@
-
-
 # 🧠 Multi-Agent Social Cognitive Dissonance Analysis – Distributed AI System in Cloud
 
 This project implements a **Distributed Multi-Agent System** capable of analyzing user queries from three distinct psychological perspectives.

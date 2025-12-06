@@ -87,11 +87,49 @@ The project is divided into three distinct layers, each running on its own serve
 
 ## 📚 Example of the output 
 
-```python
-def greet(name):
-    print(f"Hello, {name}!")
+```yaml
+Pregunta: >
+  ¿Cómo ha cambiado la manera de pensar de la gente?
 
-greet("GitHub User")
+Survivor:
+  Tweets Recuperados: |
+    • RT @geemurie: The spike in COVID-19 cases detected from...
+    • RT @Univ_inenglish: A #COVID19 outbreak was confirmed...
+    • RT @dhanyarajendran: At Chennai quarantine facility...
+
+  Pensamiento Interno: |
+    La gente parece subestimar la amenaza latente.
+    Los datos de centros de cuarentena confirman un aumento.
+    Exigen ser liberados, ignorando los protocolos.
+
+Speculator:
+  Tweets Recuperados: |
+    • RT @imtftrader: $stock market investment trades...
+    • RT @ChurchillLloyd1: Equity Markets: Positive...
+    • RT @Lakshmi_888: Volatility currently dead...
+
+  Pensamiento Interno: |
+    La volatilidad está muerta.
+    Esto sugiere complacencia en el mercado.
+    Importan patrones de liquidez, no percepciones humanas.
+
+Auteur:
+  Tweets Recuperados: |
+    • “Future and the Arts: AI, Robotics, Cities, Life…”
+    • Long-Distance Empathy: Interview with Hideo Kojima...
+    • How "Death Stranding" bridges videogames and cinema...
+
+  Pensamiento Interno: |
+    La red nos une. Y nos aísla.
+    La empatía a distancia, un hilo frágil.
+    La vida mañana, un eco de nosotros mismos.
+
+Historiador:
+  Síntesis del Archivero: |
+    La disonancia cognitiva se manifiesta entre sobrevivencia,
+    cálculos económicos fríos y soledad digital.
+    Una brecha cognitiva social que define la era post-evento.
+
 ```
 
 ---

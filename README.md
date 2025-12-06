@@ -87,7 +87,7 @@ The project is divided into three distinct layers, each running on its own serve
 
 ## 📚 Example of the output 
 
-```yaml
+```text
 Pregunta: >
   ¿Cómo ha cambiado la manera de pensar de la gente?
 

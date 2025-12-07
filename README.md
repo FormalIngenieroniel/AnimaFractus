@@ -106,6 +106,8 @@ The system uses prompt engineering to enforce strict behavioral protocols:
 
 ## 📷 Screenshots 
 
+![SS1](presentation_layer/static/images/SS0.PNG)
+
 ---
 
 ## 📚 Example of the output 

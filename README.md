@@ -106,12 +106,12 @@ The system uses prompt engineering to enforce strict behavioral protocols:
 
 ## 📷 Screenshots 
 
-<p>
-  <img src="presentation_layer/static/images/SS0.PNG" width="430">
-  <img src="presentation_layer/static/images/SS1.PNG" width="430">
+<p align="center">
+  <img src="presentation_layer/static/images/SS0.PNG" width="420">
+  <img src="presentation_layer/static/images/SS1.PNG" width="420">
 </p>
 
-<p>
+<p align="center">
   <img src="presentation_layer/static/images/SS2.PNG" width="333">
   <img src="presentation_layer/static/images/SS3.PNG" width="333">
   <img src="presentation_layer/static/images/SS5.PNG" width="333">
